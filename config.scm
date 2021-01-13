@@ -2,10 +2,17 @@
 ;; for a "desktop" setup without full-blown desktop
 ;; environments.
 
-(use-modules (gnu) (gnu system nss) (nongnu packages linux) (nongnu system linux-initrd))
+(use-modules 
+  (gnu) 
+  (gnu system nss) 
+  ;; (gnu services xorg)
+  (nongnu packages linux) 
+  (nongnu system linux-initrd))
+
 (use-service-modules desktop)
+
 (use-package-modules bootloaders certs emacs emacs-xyz ratpoison suckless wm
-                     xorg)
+                     xorg terminals)
 
 (operating-system
   (kernel linux)
@@ -58,6 +65,16 @@
   ;; Use the "desktop" services, which include the X11
   ;; log-in service, networking with NetworkManager, and more.
   (services %desktop-services)
+
+  ;; (services
+  ;;   (append
+  ;;     (list
+  ;;   (set-xorg-configuration
+  ;;     (xorg-configuration
+  ;;       (modules
+  ;;         %default-xorg-modules)))
+  ;;   %desktop-services)))
+
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))
